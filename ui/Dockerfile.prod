@@ -1,9 +1,12 @@
-FROM node
+FROM node:22-bookworm
+
+# react-scripts 2 uses webpack 4, which needs legacy OpenSSL algorithms.
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 WORKDIR /app
 
 COPY react-ui .
 
-RUN yarn
+RUN yarn install --frozen-lockfile --non-interactive
 
 RUN yarn build
